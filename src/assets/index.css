@@ -1,0 +1,292 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-hover: var(--hover);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+    --color-destructive: var(--destructive);
+    --color-destructive-foreground: var(--destructive-foreground);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+    --radius: 0.5rem;
+    --font-light: "Font-Light", sans-serif;
+    --font-medium: "Font-Medium", sans-serif;
+    --font-semibold: "Font-SemiBold", sans-serif;
+    --font-family-bold: "Font-Bold", sans-serif;
+    --font-extrabold: "Font-ExtraBold", sans-serif;
+}
+
+.custom-scroll {
+    overflow: auto; /* activa el scroll */
+    scrollbar-width: thin; /* Firefox */
+    scrollbar-color: #c1c1c1 transparent; /* pulgar | track */
+}
+
+/* Webkit (Chrome, Edge, Safari) */
+::-webkit-scrollbar {
+    width: 8px; /* ancho vertical   */
+    height: 8px; /* alto horizontal  */
+}
+
+::-webkit-scrollbar-track {
+    background: transparent; /* sin fondo */
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--color-primary);
+    border-radius: 3px; /* redondeado */
+}
+:not(:hover)::-webkit-scrollbar-thumb {
+    background-color: transparent; /* se oculta */
+}
+:not(:hover) {
+    scrollbar-color: transparent transparent; /* Firefox */
+}
+
+a,
+button {
+    cursor: pointer;
+}
+.animate-in {
+    animation-duration: 200ms;
+    animation-fill-mode: both;
+}
+
+.slide-in-from-top-2 {
+    animation-name: slideInFromTop;
+}
+
+.slide-in-from-right-2 {
+    animation-name: slideInFromRight;
+}
+
+.slide-in-from-left-2 {
+    animation-name: slideInFromLeft;
+}
+
+.fade-in {
+    animation-name: fadeIn;
+}
+
+@keyframes slideInFromTop {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideInFromRight {
+    from {
+        opacity: 0;
+        transform: translateX(8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInFromLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Smooth transitions for drawers and modals */
+.drawer-enter {
+    transform: translateX(100%);
+    opacity: 0;
+}
+
+.drawer-enter-active {
+    transform: translateX(0);
+    opacity: 1;
+    transition: transform 300ms ease-out, opacity 300ms ease-out;
+}
+
+.drawer-exit {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+.drawer-exit-active {
+    transform: translateX(100%);
+    opacity: 0;
+    transition: transform 300ms ease-in, opacity 300ms ease-in;
+}
+
+.modal-backdrop-enter {
+    opacity: 0;
+}
+
+.modal-backdrop-enter-active {
+    opacity: 1;
+    transition: opacity 200ms ease-out;
+}
+
+.modal-backdrop-exit {
+    opacity: 1;
+}
+
+.modal-backdrop-exit-active {
+    opacity: 0;
+    transition: opacity 200ms ease-in;
+}
+
+html,
+body {
+    font-family: Font-Medium, sans-serif;
+    scroll-behavior: smooth;
+}
+
+a,
+button {
+    cursor: pointer;
+}
+/* @vigilio/sweet */
+.vigilio-modal {
+    font-family: sans-serif;
+}
+
+.vigilio-alert {
+    bottom: 4rem !important;
+}
+
+.vigilio-alert-container {
+    font-family: sans-serif;
+    box-shadow: 0 4px 6px 2px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    padding: 0 !important;
+}
+/* .vigilio-alert-show {
+    height: 100px !important;
+} */
+.vigilio-alert-show > svg {
+    width: 60px;
+    height: 60px;
+    align-self: flex-start;
+    justify-self: start;
+}
+
+.vigilio-confirm.btn-success {
+    background-color: var(--color-primary) !important;
+    border-color: var(--primary) !important;
+}
+
+.dark .vigilio-alert-container,
+.dark .vigilio-modal .modal {
+    background-color: #0f0f0f !important;
+}
+.dark .vigilio-title,
+.dark .vigilio-html-container {
+    color: var(--color-foreground);
+}
+
+.shadow-custom {
+    box-shadow: 0px -2px 4px rgba(0, 0, 0, 0.05), 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+.delay-custom-transform-1 {
+    transition: transform var(--delay-custom-transform-1) ease;
+}
+.delay-custom-1 {
+    transition: all var(--delay-custom-1) ease;
+}
+
+/* animation */
+.animation-brightness {
+    position: relative;
+    overflow: hidden;
+}
+
+.animation-brightness::before {
+    content: "";
+    position: absolute;
+    color: white;
+    display: block;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 10;
+    width: 30%;
+    height: 100%;
+    background: linear-gradient(
+        to right,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.3) 100%
+    );
+    /* box-shadow: 0 0 10px 10px #ffffff46; */
+    animation: animationbrightness var(--brightness-delay) infinite;
+}
+
+@keyframes animationbrightness {
+    0% {
+        transform: skewX(-25deg) translateX(-1000%);
+    }
+    50% {
+        transform: skewX(-25deg) translateX(1000%);
+    }
+    100% {
+        transform: skewX(-25deg) translateX(1000%);
+    }
+}
+.input-date-white::-webkit-calendar-picker-indicator {
+    filter: invert(1); /* Convierte el icono a blanco (invierte colores) */
+    opacity: 1; /* Asegura que sea visible */
+    cursor: pointer;
+}
+.tox .tox-promotion {
+    display: none !important;
+}
+
+/*  */
+
+.sort-button:hover .icon-up {
+    display: block;
+}
+.sort-button:hover .icon-down {
+    display: none;
+}
+
+/* animation fadeinup */
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(2rem);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

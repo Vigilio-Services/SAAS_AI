@@ -1,0 +1,44 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "outDir": "dist",
+        "lib": ["es2016", "es2022"],
+        "target": "ESNext",
+        "isolatedModules": false,
+        "noEmit": false,
+        "moduleResolution": "node",
+        "allowImportingTsExtensions": false,
+        "strictPropertyInitialization": false,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "removeComments": true,
+        "strict": true,
+        "skipLibCheck": true,
+        "esModuleInterop": true,
+        "noFallthroughCasesInSwitch": true,
+        "noUnusedLocals": false,
+        "baseUrl": ".",
+        "noUnusedParameters": false,
+        "noPropertyAccessFromIndexSignature": false,
+        "paths": {
+            "@services/*": ["src/services/*"],
+            "@config/*": ["src/config/*"],
+            "@components/*": ["src/components/*"],
+            "@contexts/*": ["src/contexts/*"],
+            "@hooks/*": ["src/hooks/*"],
+            "@libs/*": ["src/libs/*"]
+        }
+    },
+    "include": ["src"],
+    "exclude": [
+        "./src/**/*.tsx",
+        "./src/**/apis/**/*.ts",
+        "./src/**/client/**/*.ts",
+        "./src/**/client/**/*.tsx",
+        "./src/components/**/*.ts",
+        "./src/hooks",
+        "vite.config.ts",
+        "./src/config/client/environments.config.ts",
+        "./src/vite-env.d.ts"
+    ]
+}
