@@ -1,4 +1,3 @@
-import { sequelize } from "@config/server/db.config";
 import { slugify } from "@libs/index";
 import {
     FiltersPaginator,
@@ -47,41 +46,6 @@ export class UserService {
                     where = {
                         ...where,
                         status: filters.status,
-                    };
-                }
-
-                if (["docente", "estudiante"].includes(user.role)) {
-                    where = {
-                        ...where,
-                        ...(user.role === "docente" ||
-                        user.role === "estudiante"
-                            ? {
-                                  [Op.or]: [
-                                      {
-                                          id: {
-                                              [Op.in]: sequelize.literal(`
-                                                  SELECT user_id
-                                                  FROM curso_user
-                                                  WHERE curso_id IN (
-                                                      SELECT curso_id
-                                                      FROM curso_user
-                                                      WHERE user_id = ${user.id}
-                                                  )
-                                              `),
-                                          },
-                                      },
-                                      {
-                                          role: {
-                                              [Op.in]: [
-                                                  "academico",
-                                                  "administracion",
-                                                  "super-admin",
-                                              ],
-                                          },
-                                      },
-                                  ],
-                              }
-                            : {}),
                     };
                 }
 

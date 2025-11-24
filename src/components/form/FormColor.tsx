@@ -126,7 +126,7 @@ export default function FormColor<T extends object>({
                     <button
                         type="button"
                         onClick={() => setIsOpen(!isOpen)}
-                        className="flex items-center justify-between gap-2 rounded-xl border border-gray-200 bg-white px-3 py-2 transition w-full"
+                        className="flex items-center justify-between gap-2 rounded-xl border border-border bg-card px-3 py-2 transition w-full"
                     >
                         <div className="flex items-center gap-2">
                             <div
@@ -140,7 +140,9 @@ export default function FormColor<T extends object>({
                             </span>
                         </div>
                         <ChevronDownIconSolid
-                            className={`${isOpen ? "rotate-180" : ""}`}
+                            className={`${
+                                isOpen ? "rotate-180" : ""
+                            } fill-foreground`}
                             {...sizeIcon.small}
                         />
                     </button>
@@ -148,12 +150,12 @@ export default function FormColor<T extends object>({
                     {/* Popup */}
                     {isOpen && (
                         <Card
-                            className="absolute z-50 w-72 rounded-2xl bg-white p-4"
+                            className="absolute z-50 w-72 rounded-2xl bg-card p-4"
                             style={getPopupPosition()}
                         >
                             {/* Header */}
                             <div className="flex justify-between items-center mb-3">
-                                <h3 className="text-sm font-medium text-gray-700">
+                                <h3 className="text-sm font-medium text-foreground">
                                     Elige un color
                                 </h3>
                                 {question && (

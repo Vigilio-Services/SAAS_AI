@@ -24,15 +24,18 @@ export class FileController {
     constructor(private readonly fileService: FileService) {}
 
     @Get("/")
-    async index(@Query() filters: FiltersPaginator<FileSchema>) {
-        const result = await this.fileService.index(filters);
+    async index(
+        @Req() req: RequestVigilio,
+        @Query() filters: FiltersPaginator<FileSchema>
+    ) {
+        const result = await this.fileService.index(req.empresa, filters);
         return result;
     }
 
     @Pipe(object({ id: string() }))
     @Get("/:id")
-    async show(@Params("id") id: string) {
-        const result = await this.fileService.show(id);
+    async show(@Req() req: RequestVigilio, @Params("id") id: string) {
+        const result = await this.fileService.show(req.empresa, id);
         return result;
     }
 
@@ -40,7 +43,11 @@ export class FileController {
     @Status(201)
     @Post("/")
     async store(@Req() req: RequestVigilio, @Body() body: FileStoreDto) {
-        const result = await this.fileService.store(req.user, body);
+        const result = await this.fileService.store(
+            req.empresa,
+            req.user,
+            body
+        );
         return result;
     }
 
@@ -50,8 +57,8 @@ export class FileController {
         })
     )
     @Delete("/:id")
-    async destroy(@Params("id") id: string) {
-        const result = await this.fileService.destroy(id);
+    async destroy(@Req() req: RequestVigilio, @Params("id") id: string) {
+        const result = await this.fileService.destroy(req.empresa, id);
         return result;
     }
 }

@@ -31,6 +31,7 @@
             "@contexts/*": ["src/contexts/*"],
             "@hooks/*": ["src/hooks/*"],
             "@libs/*": ["src/libs/*"],
+            "~/*": ["src/*"],
             "react": ["node_modules/preact/compat/"],
             "react-dom": ["node_modules/preact/compat/"]
         }

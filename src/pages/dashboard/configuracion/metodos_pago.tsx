@@ -62,7 +62,7 @@ function MetodosPagoPage() {
                     ]}
                     isCustomContent
                 />
-                <div class=" border-border  border-x border-b p-6">
+                <div class=" border-border  border-x border-b p-6 bg-card">
                     <EmpresaPaymentUpdate
                         configuracion_payment_tab={configuracion_tab.value}
                     />

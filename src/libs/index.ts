@@ -159,7 +159,7 @@ export function getHour(
     empresa: EmpresaSchemaFromServer | null = null
 ): string {
     return dayjs(date)
-        .tz(empresa?.timezone || timezoneDefault)
+        .tz(empresa?.timezone || timezoneDefault!)
         .format("HH:mm")
         .slice(0, 5);
 }
@@ -191,7 +191,7 @@ export function formatDate(
     date: Date,
     empresa: EmpresaSchemaFromServer | null = null
 ) {
-    return dayjs(date).tz(empresa?.timezone || timezoneDefault);
+    return dayjs(date).tz(empresa?.timezone || timezoneDefault!);
 }
 export function formatDateTz(
     date: Date,
@@ -200,7 +200,7 @@ export function formatDateTz(
     empresa: EmpresaSchemaFromServer | null = null
 ) {
     return dayjs(date)
-        .tz(empresa?.timezone || timezoneDefault)
+        .tz(empresa?.timezone || timezoneDefault!)
         .format(format);
 }
 
@@ -219,7 +219,7 @@ export function formatDateTzUTC(
     date: Date | string,
     empresa: EmpresaSchemaFromServer | null = null
 ) {
-    return dayjs(date).tz(empresa?.timezone || timezoneDefault || false);
+    return dayjs(date).tz(empresa?.timezone || timezoneDefault!);
 }
 
 // 21-10-1998
@@ -235,10 +235,10 @@ export function time(
     date: Date,
     empresa: EmpresaSchemaFromServer | null = null
 ) {
-    return dayjs(date).tz(empresa?.timezone || timezoneDefault);
+    return dayjs(date).tz(empresa?.timezone || timezoneDefault!);
 }
 export function now(empresa: EmpresaSchemaFromServer | null = null) {
-    return dayjs().tz(empresa?.timezone || timezoneDefault);
+    return dayjs().tz(empresa?.timezone || timezoneDefault!);
 }
 type FilterPredicate<T> = (item: T, index: number, array: T[]) => boolean;
 
@@ -298,7 +298,7 @@ export function showTime(
     empresa: EmpresaSchemaFromServer | null = null
 ) {
     return dayjs()
-        .tz(empresa?.timezone || timezoneDefault)
+        .tz(empresa?.timezone || timezoneDefault!)
         .to(date);
 }
 // dimension solo es valido para imagenes
@@ -340,8 +340,10 @@ export function diferenciaEnDias(
     time: QUnitType = "second",
     empresa: EmpresaSchemaFromServer | null = null
 ) {
-    const ahora = dayjs().tz(empresa?.timezone || timezoneDefault);
-    const fecha = dayjs(fechaObjetivo).tz(empresa?.timezone || timezoneDefault);
+    const ahora = dayjs().tz(empresa?.timezone || timezoneDefault!);
+    const fecha = dayjs(fechaObjetivo).tz(
+        empresa?.timezone || timezoneDefault!
+    );
     return fecha.diff(ahora, time);
 }
 export function getFile(name: string, files: FileSchemaToClient[]) {
@@ -373,7 +375,7 @@ export function restarDays(
     empresa: EmpresaSchemaFromServer | null = null
 ) {
     return dayjs(back)
-        .tz(empresa?.timezone || timezoneDefault)
+        .tz(empresa?.timezone || timezoneDefault!)
         .diff(now, time);
 }
 export default dayjs;

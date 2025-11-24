@@ -6,16 +6,21 @@ import cache from "@vigilio/express-core/cache";
 import { Op, WhereOptions } from "sequelize";
 import { FileStoreDto } from "../dtos/file.dto";
 import { FileEntity } from "../entitites/file.entity";
+import { EmpresaSchemaFromServer } from "../schemas/empresa.schema";
 import { FileSchema } from "../schemas/file.schema";
 
 @Injectable()
 export class FileService {
-    async index(filters: FiltersPaginator<FileSchema>) {
+    async index(
+        empresa: EmpresaSchemaFromServer,
+        filters: FiltersPaginator<FileSchema>
+    ) {
         const result = await paginator("file", {
             filters,
             cb: async (props) => {
                 const { offset, limit, filters, search } = props;
                 let where: WhereOptions = {
+                    empresa_id: empresa.id,
                     name: {
                         [Op.iLike]: `%${search || ""}%`,
                     },
@@ -47,8 +52,17 @@ export class FileService {
         });
         return result;
     }
-    async store(user: UserAuth, body: FileStoreDto) {
-        const file = new FileEntity({ ...body, user_id: user.id, history: [] });
+    async store(
+        empresa: EmpresaSchemaFromServer,
+        user: UserAuth,
+        body: FileStoreDto
+    ) {
+        const file = new FileEntity({
+            ...body,
+            user_id: user.id,
+            empresa_id: empresa.id,
+            history: [],
+        });
         await file.save();
         cache.delete("files");
         return {
@@ -56,8 +70,13 @@ export class FileService {
             file,
         };
     }
-    async show(id: string) {
-        const file = await FileEntity.findByPk(id);
+    async show(empresa: EmpresaSchemaFromServer, id: string) {
+        const file = await FileEntity.findOne({
+            where: {
+                empresa_id: empresa.id,
+                id,
+            },
+        });
         if (!file) {
             throw new NotFoundException(
                 `No se encontró un archivo con el id ${id}`
@@ -68,8 +87,8 @@ export class FileService {
             file,
         };
     }
-    async destroy(id: string) {
-        const { file } = await this.show(id);
+    async destroy(empresa: EmpresaSchemaFromServer, id: string) {
+        const { file } = await this.show(empresa, id);
         if (file.file) {
             await removeFile(file.file);
         }

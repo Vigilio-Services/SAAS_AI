@@ -12,8 +12,8 @@ import type { EmpresaSchemaFromServer } from "../schemas/empresa.schema";
 @Injectable()
 export class EmpresaService {
     async update(
-        user: UserAuth,
         empresa: EmpresaSchemaFromServer,
+        user: UserAuth,
         body: EmpresaUpdateDto
     ) {
         await EmpresaEntity.update(
@@ -30,10 +30,18 @@ export class EmpresaService {
             message: "Empresa actualizada correctamente",
         };
     }
-    async updateCompany(id: string, body: CompanyUpdateDto) {
-        await CompanyEntity.update(body, {
-            where: { id },
-        });
+    async updateCompany(
+        empresa: EmpresaSchemaFromServer,
+        user: UserAuth,
+        id: string,
+        body: CompanyUpdateDto
+    ) {
+        await CompanyEntity.update(
+            { ...body, user_id: user.id },
+            {
+                where: { id, empresa_id: empresa.id },
+            }
+        );
         cache.delete("empresa");
         return {
             success: true,
@@ -58,6 +66,7 @@ export class EmpresaService {
     }
     async updateMetodoPago(
         empresa: EmpresaSchemaFromServer,
+        user: UserAuth,
         body: MetodoPagoUpdateDto
     ) {
         // biome-ignore lint/suspicious/noExplicitAny: <explanation>
@@ -71,11 +80,14 @@ export class EmpresaService {
             data[0].length || data[1].length || data[2].length
                 ? body.transferencias
                 : null;
-        await MetodoPagoEntity.update(body, {
-            where: {
-                empresa_id: empresa.id,
-            },
-        });
+        await MetodoPagoEntity.update(
+            { ...body, user_id: user.id },
+            {
+                where: {
+                    empresa_id: empresa.id,
+                },
+            }
+        );
         cache.delete(`EMPRESA:${empresa.slug}`);
         return {
             success: true,

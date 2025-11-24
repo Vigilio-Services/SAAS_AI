@@ -22,6 +22,12 @@ export class SettingEntity
     @Column({ type: DataType.STRING(30), allowNull: false })
     declare bg_color: string;
 
+    @Column({
+        type: DataType.STRING(30),
+        allowNull: false,
+    })
+    declare bg_color_paper: string;
+
     @Column({ type: DataType.STRING(30), allowNull: false })
     declare bg_color_responsive: string;
 
@@ -30,9 +36,6 @@ export class SettingEntity
 
     @Column({ type: DataType.STRING(30), allowNull: false })
     declare bg_color_header: string;
-
-    @Column({ type: DataType.STRING(30), allowNull: false })
-    declare bg_color_footer: string;
 
     @Column({ type: DataType.STRING(30), allowNull: false })
     declare bg_color_aside: string;
@@ -75,7 +78,13 @@ export class SettingEntity
     declare hamburger: SettingSchema["hamburger"];
 
     @Column({ type: DataType.STRING, allowNull: false })
-    declare type_start: SettingSchema["type_start"];
+    declare type_star: SettingSchema["type_star"];
+
+    @Column({ type: DataType.STRING, allowNull: false })
+    declare type_cart: SettingSchema["type_cart"];
+
+    @Column({ type: DataType.STRING, allowNull: false })
+    declare header_type: SettingSchema["header_type"];
 
     @Column({ type: DataType.BOOLEAN, allowNull: false })
     declare position_header: boolean;
@@ -137,7 +146,13 @@ export class SettingEntity
     declare is_product_wallpaper: boolean;
 
     @Column({ type: DataType.BOOLEAN, allowNull: false, defaultValue: false })
+    declare is_language_active: boolean;
+
+    @Column({ type: DataType.BOOLEAN, allowNull: false, defaultValue: false })
     declare is_ecommerce: boolean;
+
+    @Column({ type: DataType.BOOLEAN, allowNull: false, defaultValue: false })
+    declare is_hidde_total_cart: boolean;
 
     @Column({ type: DataType.BOOLEAN, allowNull: false, defaultValue: false })
     declare is_login: boolean;

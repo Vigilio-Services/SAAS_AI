@@ -1,5 +1,5 @@
+import type { RequestVigilio } from "@config/server/const";
 import { Pipe, Validator } from "@libs/server/custom.decorator";
-import type { UserAuth } from "@services/auth/dtos/auth.dto";
 import { JWTAuth, OnlyBussiness } from "@services/auth/guards/auth.guard";
 import {
     Body,
@@ -18,7 +18,6 @@ import {
     type MetodoPagoUpdateDto,
     metodoPagoUpdateDto,
 } from "../dtos/metodo_pago.dto";
-import type { EmpresaSchemaFromServer } from "../schemas/empresa.schema";
 import { EmpresaService } from "../services/empresa.service";
 
 @Injectable()
@@ -29,12 +28,12 @@ export class EmpresaController {
     @Validator(empresaUpdateDto)
     @JWTAuth(["empresa_update"])
     @Put("/")
-    async update(
-        @Req("user") user: UserAuth,
-        @Req("empresa") empresa: EmpresaSchemaFromServer,
-        @Body() body: EmpresaUpdateDto
-    ) {
-        const result = await this.empresaService.update(user, empresa, body);
+    async update(@Req() req: RequestVigilio, @Body() body: EmpresaUpdateDto) {
+        const result = await this.empresaService.update(
+            req.empresa,
+            req.user,
+            body
+        );
         return result;
     }
 
@@ -45,10 +44,16 @@ export class EmpresaController {
     @Pipe(object({ id: string() }))
     @Put("/:id")
     async updateCompany(
+        @Req() req: RequestVigilio,
         @Params("id") id: string,
         @Body() body: CompanyUpdateDto
     ) {
-        const result = await this.empresaService.updateCompany(id, body);
+        const result = await this.empresaService.updateCompany(
+            req.empresa,
+            req.user,
+            id,
+            body
+        );
         return result;
     }
 
@@ -57,8 +62,8 @@ export class EmpresaController {
     @OnlyBussiness()
     @JWTAuth(["empresa_payment"])
     @Get("/metodo-pago")
-    async metodoPago(@Req("empresa") empresa: EmpresaSchemaFromServer) {
-        const result = await this.empresaService.metodoPago(empresa);
+    async metodoPago(@Req() req: RequestVigilio) {
+        const result = await this.empresaService.metodoPago(req.empresa);
         return result;
     }
 
@@ -67,11 +72,12 @@ export class EmpresaController {
     @JWTAuth(["empresa_payment"])
     @Put("/metodo-pago")
     async updateMetodoPago(
-        @Req("empresa") empresa: EmpresaSchemaFromServer,
+        @Req() req: RequestVigilio,
         @Body() body: MetodoPagoUpdateDto
     ) {
         const result = await this.empresaService.updateMetodoPago(
-            empresa,
+            req.empresa,
+            req.user,
             body
         );
         return result;

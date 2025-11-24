@@ -23,6 +23,7 @@ export default defineConfig({
             "@libs": path.resolve(__dirname, "src", "libs"),
             "@components": path.resolve(__dirname, "src", "components"),
             "@config": path.resolve(__dirname, "src", "config"),
+            "~": path.resolve(__dirname, "src"),
         },
     },
     base: process.env.NODE_ENV === "production" ? "/dist/" : "/",

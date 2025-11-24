@@ -92,11 +92,6 @@ export const settingSchema = object({
         maxLength(30),
         toTrimmed(),
     ]),
-    bg_color_footer: string([
-        regex(COLOR_REGEX, "Color incorrecto"),
-        maxLength(30),
-        toTrimmed(),
-    ]),
     bg_color_aside: string([
         regex(COLOR_REGEX, "Color incorrecto"),
         maxLength(30),
@@ -168,6 +163,23 @@ export const settingSchema = object({
         "Tipo de icono no válido"
     ),
     type_star: union([literal("heart"), literal("star")]),
+    type_cart: union(
+        [
+            literal("shopping-cart"),
+            literal("shopping-bag"),
+            literal("shopping-basket"),
+        ],
+        "Tipo de carrito no válido"
+    ),
+    header_type: union(
+        [
+            literal("normal"),
+            literal("search"),
+            literal("search2"),
+            literal("transparent"),
+        ],
+        "Tipo de header no válido"
+    ),
     position_header: boolean(),
     border_title_type: union(
         [
@@ -224,6 +236,7 @@ export const settingSchema = object({
     is_ecommerce: boolean(),
     is_login: boolean(),
     is_cuota: boolean(),
+    is_hidde_total_cart: boolean(),
 
     // ===========================
     // SECCIONES Y MENÚS
@@ -246,6 +259,7 @@ export const settingSchema = object({
     // ===========================
     // MULTILENGUAJE
     // ===========================
+    is_language_active: boolean(),
     multi_lenguaje: nullable(
         object({
             type: union([

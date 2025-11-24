@@ -7,11 +7,15 @@ import { Injectable } from "@vigilio/express-core";
 import cache from "@vigilio/express-core/cache";
 import { AddressStoreDto, AddressUpdateDto } from "../dtos/address.dto";
 import { AddressEntity } from "../entitites/address.entity";
+import { EmpresaSchemaFromServer } from "../schemas/empresa.schema";
 
 @Injectable()
 export class AddressService {
-    async index() {
+    async index(empresa: EmpresaSchemaFromServer) {
         const data = await AddressEntity.findAll({
+            where: {
+                empresa_id: empresa.id,
+            },
             order: [["id", "DESC"]],
             include: [
                 userModified("user"),
@@ -25,23 +29,33 @@ export class AddressService {
                     ],
                 },
             ],
+
             raw: true,
             nest: true,
         });
         return { success: true, data };
     }
-    async store(user: UserAuth, data: AddressStoreDto) {
+    async store(
+        empresa: EmpresaSchemaFromServer,
+        user: UserAuth,
+        data: AddressStoreDto
+    ) {
         const address = await AddressEntity.create({
             ...data,
             user_id: user.id,
+            empresa_id: empresa.id,
         });
         return {
             success: true,
             address,
         };
     }
-    async show(id: string) {
-        const address = await AddressEntity.findByPk(id, {
+    async show(empresa: EmpresaSchemaFromServer, id: string) {
+        const address = await AddressEntity.findOne({
+            where: {
+                empresa_id: empresa.id,
+                id,
+            },
             include: [
                 userModified("user"),
                 {
@@ -62,11 +76,16 @@ export class AddressService {
             address,
         };
     }
-    async update(user: UserAuth, id: string, data: AddressUpdateDto) {
+    async update(
+        empresa: EmpresaSchemaFromServer,
+        user: UserAuth,
+        id: string,
+        data: AddressUpdateDto
+    ) {
         await AddressEntity.update(
             { ...data, user_id: user.id },
             {
-                where: { id },
+                where: { empresa_id: empresa.id, id },
             }
         );
         cache.delete("empresa");

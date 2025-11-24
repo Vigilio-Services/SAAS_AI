@@ -7,11 +7,9 @@ export const estadoUser: [UserSchema["status"], string][] = [
     ["bloqueo-definitivo", "Bloqueo Definitivo"],
 ];
 export const classRole: Record<UserSchema["role"], string> = {
-    "super-admin": " !border-black/80 border",
-    estudiante: "!border-primary/80 border",
-    docente: "!border-green-600/80 border",
-    academico: "!border-yellow-600/80 border",
-    administracion: "!border-purple-600/80 border",
+    administracion: " !border-black/80 border",
+    worker: "!border-primary/80 border",
+    user: "!border-green-600/80 border",
 };
 export const DOCUMENT_CODE: { key: DocumentCode; value: string }[] = [
     { key: "01", value: "DNI" },

@@ -27,30 +27,34 @@ export class AddressController {
     constructor(private readonly addressService: AddressService) {}
 
     @Get("/")
-    async index() {
-        const result = await this.addressService.index();
+    async index(@Req() req: RequestVigilio) {
+        const result = await this.addressService.index(req.empresa);
         return result;
     }
 
     @Get("/:id")
-    async show(@Params("id") id: string) {
-        const result = await this.addressService.show(id);
+    async show(@Req() req: RequestVigilio, @Params("id") id: string) {
+        const result = await this.addressService.show(req.empresa, id);
         return result;
     }
 
     @Validator(addressStoreDto)
     @OnlyBussiness()
-    @JWTAuth(["super-admin", "administracion"])
+    @JWTAuth(["empresa_address"])
     @Status(201)
     @Post("/")
     async store(@Req() req: RequestVigilio, @Body() body: AddressStoreDto) {
-        const result = await this.addressService.store(req.user, body);
+        const result = await this.addressService.store(
+            req.empresa,
+            req.user,
+            body
+        );
         return result;
     }
 
     @Validator(addressUpdateDto)
     @OnlyBussiness()
-    @JWTAuth(["super-admin", "administracion"])
+    @JWTAuth(["empresa_address"])
     @Status(201)
     @Pipe(object({ id: string() }))
     @Put("/:id")
@@ -59,7 +63,12 @@ export class AddressController {
         @Params("id") id: string,
         @Body() body: AddressUpdateDto
     ) {
-        const result = await this.addressService.update(req.user, id, body);
+        const result = await this.addressService.update(
+            req.empresa,
+            req.user,
+            id,
+            body
+        );
         return result;
     }
 }

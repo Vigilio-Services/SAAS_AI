@@ -5,10 +5,10 @@ export const settingSeeder: Omit<SettingSchema, "id"> = {
      COLORES
   =========================== */
     bg_color: "#0B95BA",
+    bg_color_paper: "#0B95BA",
     bg_color_responsive: "#f5f5f5",
     bg_color_secondary: "#f0f0f0",
     bg_color_header: "#1a1a1a",
-    bg_color_footer: "#1a1a1a",
     bg_color_aside: "#fafafa",
     text_color: "#333333",
     bg_color_button: "#ff6600",
@@ -26,7 +26,7 @@ export const settingSeeder: Omit<SettingSchema, "id"> = {
     logo_width: 180,
     type_icons_bars: "light",
     hamburger: "bars",
-    type_start: "star",
+    type_star: "star",
     position_header: true,
     border_title_type: "border",
     type_loader: "three",
@@ -37,6 +37,8 @@ export const settingSeeder: Omit<SettingSchema, "id"> = {
     products_limit: 12,
     products_limit_offer: 8,
     web_script: "",
+    type_cart: "shopping-cart",
+    header_type: "normal",
 
     /* ===========================
      MULTIMEDIA / IMÁGENES
@@ -57,6 +59,7 @@ export const settingSeeder: Omit<SettingSchema, "id"> = {
     is_ecommerce: true,
     is_login: true,
     is_cuota: false,
+    is_hidde_total_cart: false,
 
     /* ===========================
      SECCIONES Y MENÚS

@@ -46,7 +46,7 @@ export class UserController {
     }
 
     @OnlyBussiness()
-    @JWTAuth(["super-admin", "academico"])
+    @JWTAuth(["user"])
     @Status(201)
     @Validator(userStoreDto)
     @Post("/")
@@ -56,7 +56,7 @@ export class UserController {
     }
 
     @OnlyBussiness()
-    @JWTAuth(["super-admin", "academico"])
+    @JWTAuth(["user"])
     @Pipe(object({ id: string() }))
     @Get("/:id")
     async show(@Params("id") id: string) {
@@ -65,7 +65,7 @@ export class UserController {
     }
 
     @OnlyBussiness()
-    @JWTAuth(["super-admin", "academico"])
+    @JWTAuth(["user"])
     @Status(201)
     @Pipe(object({ id: string() }))
     @Validator(userUpdateDto)
@@ -80,7 +80,7 @@ export class UserController {
     }
 
     @OnlyBussiness()
-    @JWTAuth(["super-admin", "academico"])
+    @JWTAuth(["user"])
     @Pipe(object({ id: string() }))
     @Validator(userUpdatePasswordDto)
     @Put("/:id/update-password")
@@ -92,7 +92,7 @@ export class UserController {
         return result;
     }
 
-    @JWTAuth(["super-admin", "academico"])
+    @JWTAuth(["user"])
     @Pipe(object({ id: string() }))
     @Delete("/:id")
     async destroy(@Params("id") id: string) {
@@ -102,7 +102,7 @@ export class UserController {
 
     @OnlyBussiness()
     @Validator(object({ ids: array(number()) }))
-    @JWTAuth(["super-admin", "academico"])
+    @JWTAuth(["user"])
     @Delete("/")
     async destroyUsers(@Body() body: { ids: number[] }) {
         const result = await this.userService.destroyUsers(body.ids);
